@@ -5,8 +5,16 @@ const mongoose = require('mongoose');
 
 const User = mongoose.model('users');
 
+// This function creates the token to send to cookie
 passport.serializeUser((user, done) => {
   done(null, user.id);
+});
+
+// This function searches using the id and returns user.
+passport.deserializeUser((id, done) => {
+  User.findById(id).then(user => {
+    done(null, user);
+  });
 });
 
 passport.use(
